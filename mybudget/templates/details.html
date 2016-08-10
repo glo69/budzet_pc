@@ -1,0 +1,29 @@
+{% extends "budzet.html"%}
+{%block title%}
+Nowy wydatek
+{% endblock %}
+{% block header %}
+user: {{request.user.username}}  
+{% endblock %}
+{% block content %}
+    <h3>Edycja wydatku {{detail.id}} </h3>
+   	Aktualny typ wydatku: {{detail.typ}} </br>
+   	</br>
+   	Aktualny okres: {{detail.okres}} </br>
+   	</br>
+   	Aktualna cena: {{detail.cena}} </br>
+   	</br> 
+   	Aktualny komentarz: {{detail.komentarz}} </br>
+   	</br>
+   	Wprowadz nowe wartosci:
+   	
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        </br>
+        <button type="submit" class="save btn btn-default">Zapisz zmiany</button> 
+        <button onclick="window.location.href = '/remove/{{detail.numer}}'">Usun wydatek</button>
+        <button onclick="window.location.href = '/period_list'">Anuluj</button>
+     </form>
+</br>     
+{% endblock %}
+

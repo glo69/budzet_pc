@@ -1,0 +1,85 @@
+{% extends "budzet.html"%}
+{%block title%}
+lista wydatkow
+{% endblock %}
+{% block header %}
+user: {{request.user.username}}  
+{% endblock %}
+{% block content %}
+<script src="/static/jquery-1.12.3.min.js"></script>
+<script src="/static/highcharts.js"></script>
+<script language="javascript" type="text/javascript" src="/static/actb.js"></script>
+<script language="javascript" type="text/javascript" src="/static/tablefilter.js"></script>
+    
+    <h3>Lista wydatkow za okres {{wynik.Okres}}</h3>
+
+<table border="1">  
+{% for value, value2 in dane.iteritems %}
+<tr>
+		<td>{{value}}</td>
+		<td>{{ value2}}</td>
+		
+</tr>
+{% endfor %}
+</table>
+	
+
+Ilosc dni w okresie {{ wynik.ilosc_dni }} <br/>
+Numer dnia w okresie {{wynik.numer_dnia}} <br/>
+Sredni dzienny wydatek w bierzacym okresie do dnia dzisiejszego = {{wynik.sredni_wydatek_w_okresie_do_dzis}} PLN <br/>
+Prognozowane wydatki w okresie {{ wynik.przewidywane_wydatki_w_okresie }} PLN <br/>
+<div id="chart_container" style="width:60%; height:400px;"></div>
+<!--javascript for charts
+-->
+<script>
+$(function () {
+$('#chart_container').highcharts({
+chart: {type: 'bar'},
+title: {text: 'Struktura wydatkow'},
+xAxis: {
+categories: [ '{{ dane_wykres.categories|join:"','" }}']},
+yAxis: {title: {text: 'PLN'}},
+series: [{name: 'Wydatki', 
+data:[{{ dane_wykres.cat|join:","}}]
+}]
+});
+});
+</script>
+
+<br/>
+<table border="2" id="table1" class="sortable" >
+    
+<tr>
+<td>ID</td>
+<td>DATA</td>
+<td>TYP WYDATKU</td>
+<td>KOMENTARZ</td>
+<td>CENA</td>
+<td>AUTOR</td>
+</tr>
+    {% for post in posts %}
+		<tr>
+	    <td><a href="/details/{{ post.id }}">{{ post.id }}</a></td>
+		<td>{{ post.data_utworzenia }}</td>
+		<td>{{ post.typ}}</td>
+        <td>{{ post.komentarz }} </td>
+        <td>{{ post.cena}}</td>
+        <td>{{ post.autor }}</td>
+        <td>{{ post.okres}}</td>
+        </tr>
+{% endfor %}
+    </table>
+<script language="javascript" type="text/javascript">
+//<![CDATA[
+    var table_Props =  {
+                            col_2: "select",
+                            col_5: "none",
+                            display_all_text: " [ Show all ] ",
+                            sort_select: true 
+                        };
+    setFilterGrid( "table1",table_Props );
+//]]>
+</script>
+{% endblock %}
+    
+

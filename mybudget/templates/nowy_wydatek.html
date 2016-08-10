@@ -1,0 +1,43 @@
+{% extends "budzet.html"%}
+{%block title%}
+Nowy wydatek
+{% endblock %}
+{% block header %}
+user: {{request.user.username}}  
+{% endblock %}
+{% block content %}
+    <h3>Nowy wydatek</h3>
+   	
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <input id="kolejny_wpis" type="checkbox" name="kolejny_wpis" >Czy po zapisaniu chcesz dodac kolejny wydatek? </br>
+        </br>
+        <button type="submit" class="save btn btn-default">Zapisz wydatek</button> 
+     </form>
+</br>     
+Ostatni wprowadzony wydatek to:
+  <table border="2" >
+<tr>
+<td>ID</td>
+<td>DATA</td>
+<td>TYP WYDATKU</td>
+<td>KOMENTARZ</td>
+<td>CENA</td>
+<td>AUTOR</td>
+<td>OKRES</td>
+</tr>
+
+		<tr>
+	    <td><a href="/details/{{ post.id }}">{{ post.id }}</a></td>
+		<td>{{ post.data_utworzenia }}</td>
+		<td>{{ post.typ}}</td>
+        <td>{{ post.komentarz }} </td>
+        <td>{{ post.cena}}</td>
+        <td>{{ post.autor }}</td>
+        <td>{{ post.okres}}</td>
+        </tr>
+</table>
+</br>
+<button onclick="window.location.href = '/question'">Zakoncz aktualny okres</button>
+{% endblock %}
+

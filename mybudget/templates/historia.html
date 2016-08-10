@@ -1,0 +1,63 @@
+{% extends "budzet.html"%}
+{%block title%}
+lista wydatkow
+{% endblock %}
+
+{% block header %}
+user: {{request.user.username}}  
+{% endblock %}
+
+{% block content %}
+
+    
+    <h3>Wybierz metodę oraz okres za jaki chcesz wyswietlic dane</h3>  
+    </br>
+    Raport szczególowy za dowolny okres od - do
+<form action="/range_date/" method="post">
+    {% csrf_token %}
+    <input id="start_date" type="date" name="start_date" >
+    <input id="end_date" type="date" name="end_date" >
+    </br>
+    <input type="submit" value="Wyswietl raport" />
+</form>
+</br>
+Porównanie dwóch okresów od - do
+<form action="/range_date3/" method="post">
+    {% csrf_token %}
+    <input id="start_date" type="date" name="start_date" >
+    <input id="end_date" type="date" name="end_date" >
+    </br>
+    <input id="start_date1" type="date" name="start_date1" >
+    <input id="end_date1" type="date" name="end_date1" >
+    </br>
+    <input type="submit" value="Wyswietl porownanie" />
+</form>
+
+
+    </br>
+    Historia według okresów rozliczeniowych
+    <table border="2">
+<tr>
+<td>Nazwa okresu [MMYYYY]</td>
+
+</tr>
+    {% for post in daty %}
+		<tr>
+	    <td><a href="/history/{{ post }}">{{ post }}</a></td>
+        </tr>
+{% endfor %}
+
+    </table>
+</br> 
+Wyswietl wszystkie wpisy
+</br>
+    <button onclick="window.location.href = '/history'">Historia pelna</button>
+    
+   
+   
+
+
+
+{% endblock %}
+    
+

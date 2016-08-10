@@ -1,0 +1,66 @@
+{% extends "budzet.html"%}
+{%block title%}
+lista wydatkow
+{% endblock %}
+{% block header %}
+user: {{request.user.username}}  
+{% endblock %}
+{% block content %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script language="javascript" type="text/javascript" src="/static/actb.js"></script>
+<script language="javascript" type="text/javascript" src="/static/tablefilter.js"></script>
+   
+    <h3>Porownanie wydatkow z zakreu dat: {{wynik.Okres}}</h3>
+
+<table border="0">
+<td>
+<table border="2">  
+{% for value, value2 in dane.iteritems %}
+	<tr>
+		<td>{{value}}</td>
+		<td>{{ value2}}</td>
+	</tr>
+{% endfor %}
+</table>
+
+</td> 
+
+<td> 
+	
+<table border="2">  
+{% for value, value2 in dane1.iteritems %}
+	<tr>
+		
+		<td>{{ value2}}</td>
+	</tr>
+{% endfor %}
+
+</table>
+
+</td>
+</table> 
+
+<div id="chart_container" style="width:60%; height:400px;"></div>
+<!--javascript for charts
+-->
+<script>
+$(function () {
+$('#chart_container').highcharts({
+chart: {type: 'bar'},
+title: {text: 'Struktura wydatkow'},
+xAxis: {
+categories: [ '{{ dane_wykres.categories|join:"','" }}']},
+yAxis: {title: {text: 'PLN'}},
+series: [{name: 'Wydatki', 
+data:[{{ dane_wykres.cat2|join:","}}]
+},{name: 'Wydatki', 
+data:[{{ dane_wykres.cat|join:","}}]
+}]
+});
+});
+</script>
+
+{% endblock %}
+    
+

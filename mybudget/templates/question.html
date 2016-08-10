@@ -1,0 +1,16 @@
+{% extends "budzet.html"%}
+{%block title%}
+Nowy wydatek
+{% endblock %}
+{% block header %}
+user: {{request.user.username}}  
+{% endblock %}
+{% block content %}
+    <h3>Potwierdz zakonczenie okresu</h3>
+</br>   	
+Czy napewno zakonczyc aktualny okres ?   
+</br>
+<button onclick="window.location.href = '/end_period'">Tak</button>
+<button onclick="window.location.href = '/new'">Nie</button>
+{% endblock %}
+
