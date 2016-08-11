@@ -429,3 +429,5 @@ def set_date(request):
     return HttpRedirect("/name")
     
 
+#def test_branch1():
+#    return HttpRedirect("/new")
